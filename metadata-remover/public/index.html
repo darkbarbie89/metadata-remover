@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metadata Remover - Clean EXIF Data & Protect Your Privacy Online</title>
+    <meta name="description" content="Remove metadata from photos, PDFs, and documents instantly. Free online tool to delete EXIF data, location info, and personal details. No uploads - 100% private.">
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-XXXXXXXXXX');
+</script>
+
+</head>
+<body>
+    <header>
+        <h1>Metadata Remover</h1>
+        <p>Remove hidden data from your files - 100% private, no uploads</p>
+    </header>
+
+    <main>
+        <div id="dropzone" class="dropzone">
+            <svg class="upload-icon" viewBox="0 0 24 24" width="48" height="48">
+                <path d="M9 16h6v-6h4l-7-7-7 7h4v6zm-4 2h14v2H5v-2z"/>
+            </svg>
+            <p>Drag & drop files here or click to browse</p>
+            <p class="supported">Supports: JPG, PNG, PDF, DOCX, MP4</p>
+            <input type="file" id="fileInput" multiple accept=".jpg,.jpeg,.png,.pdf,.docx,.mp4" hidden>
+        </div>
+
+        <div id="results" class="results hidden">
+            <h2>Files Processed</h2>
+            <div id="fileList"></div>
+            <button id="downloadAll" class="btn-primary">Download All Clean Files</button>
+        </div>
+    </main>
+
+    <section class="features">
+        <div class="feature">
+            <h3>🔒 100% Private</h3>
+            <p>Files never leave your browser. All processing happens locally.</p>
+        </div>
+        <div class="feature">
+            <h3>⚡ Instant Results</h3>
+            <p>Remove metadata in seconds. No waiting, no uploads.</p>
+        </div>
+        <div class="feature">
+            <h3>📊 See What's Removed</h3>
+            <p>View exactly what metadata was found and removed.</p>
+        </div>
+    </section>
+
+    <section class="faq">
+        <h2>What is Metadata?</h2>
+        <p>Metadata is hidden information embedded in your files. Photos contain location data, camera settings, and timestamps. PDFs reveal author names, company info, and editing history. This data can compromise your privacy when sharing files online.</p>
+        
+        <h2>Why Remove Metadata?</h2>
+        <ul>
+            <li>Protect your location privacy from photos</li>
+            <li>Remove personal information from documents</li>
+            <li>Prevent tracking through file properties</li>
+            <li>Comply with privacy regulations</li>
+        </ul>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Metadata Remover | 
+     <a href="/privacy.html">Privacy Policy</a> | 
+     <a href="/blog/what-is-metadata.html">What is Metadata?</a> | 
+     <a href="/blog/remove-exif-from-photos.html">Remove EXIF Data</a>
+  </p>
+    </footer>
+
+    <script src="https://unpkg.com/exifr/dist/lite.umd.js"></script>
+    <script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
