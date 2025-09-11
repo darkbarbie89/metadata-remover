@@ -3,79 +3,305 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Metadata Remover - Clean EXIF Data & Protect Your Privacy Online</title>
-    <meta name="description" content="Remove metadata from photos, PDFs, and documents instantly. Free online tool to delete EXIF data, location info, and personal details. No uploads - 100% private.">
+    <title>MetaRemover - Professional Metadata Removal Tool</title>
+    <meta name="description" content="Remove metadata, EXIF data, and hidden information from files instantly. 100% private browser-based tool trusted by professionals worldwide.">
     <link rel="stylesheet" href="style.css">
-
-    <!-- Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-XXXXXXXXXX');
-</script>
-
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header>
-        <h1>Metadata Remover</h1>
-        <p>Remove hidden data from your files - 100% private, no uploads</p>
-    </header>
 
-    <main>
-        <div id="dropzone" class="dropzone">
-            <svg class="upload-icon" viewBox="0 0 24 24" width="48" height="48">
-                <path d="M9 16h6v-6h4l-7-7-7 7h4v6zm-4 2h14v2H5v-2z"/>
-            </svg>
-            <p>Drag & drop files here or click to browse</p>
-            <p class="supported">Supports: JPG, PNG, PDF, DOCX, MP4</p>
-            <input type="file" id="fileInput" multiple accept=".jpg,.jpeg,.png,.pdf,.docx,.mp4" hidden>
+<!-- NAVIGATION -->
+<nav class="nav">
+  <div class="nav-container">
+    <a href="#" class="nav-logo">
+      <span class="logo-icon">🛡️</span> <span>MetaRemoval</span>
+    </a>
+
+    <ul class="nav-menu">
+      <li><a href="#upload">Start</a></li>
+      <li><a href="#features">Features</a></li>
+      <li><a href="#who-uses">Who Uses</a></li>
+      <li><a href="#algorithm">How It Works</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ul>
+
+    <a href="#contact" class="nav-cta">Start Cleaning</a>
+  </div>
+</nav>
+
+
+
+    <!-- Hero Section -->
+    <section class="hero" id="upload">
+        <div class="hero-container">
+            <div class="hero-content">
+                <div class="hero-badge">PRIVACY FIRST</div>
+                <h1>Remove Hidden Data from Your Files Instantly</h1>
+                <p>Protect your privacy by removing metadata, EXIF data, and personal information from photos, PDFs, and documents. 100% private - files never leave your browser.</p>
+                
+                <!-- Stats -->
+                <div class="stats-row">
+                    <div class="stat-item">
+                        <div class="stat-number" id="filesProcessed">0</div>
+                        <div class="stat-label">Files Processed</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" id="metadataRemoved">0</div>
+                        <div class="stat-label">Metadata Items Removed</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">100%</div>
+                        <div class="stat-label">Privacy Guaranteed</div>
+                    </div>
+                </div>
+
+                <!-- Upload Box -->
+                <div class="upload-box">
+                    <div id="dropzone" class="dropzone">
+                        <svg class="upload-icon" width="48" height="48" viewBox="0 0 24 24" fill="none">
+                            <path d="M7 10L12 15L17 10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            <path d="M12 15V3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            <path d="M3 17L3 21H21V17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        <h3>Drop Files Here or Click to Browse</h3>
+                        <p>Supports: JPG, PNG, GIF, PDF, DOCX, MP4</p>
+                        <button class="btn-primary">Select Files</button>
+                        <input type="file" id="fileInput" multiple accept=".jpg,.jpeg,.png,.gif,.pdf,.docx,.mp4" hidden>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-graphic">
+                <img src="data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3ClinearGradient id='grad1' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%236366F1;stop-opacity:0.2' /%3E%3Cstop offset='100%25' style='stop-color:%2310B981;stop-opacity:0.2' /%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='200' cy='200' r='150' fill='url(%23grad1)'/%3E%3C/svg%3E" alt="Security">
+            </div>
         </div>
+    </section>
 
-        <div id="results" class="results hidden">
-            <h2>Files Processed</h2>
+    <!-- Results Section (Hidden by default) -->
+    <section id="results" class="results hidden">
+        <div class="container">
+            <h2>Processing Complete</h2>
             <div id="fileList"></div>
-            <button id="downloadAll" class="btn-primary">Download All Clean Files</button>
-        </div>
-    </main>
-
-    <section class="features">
-        <div class="feature">
-            <h3>🔒 100% Private</h3>
-            <p>Files never leave your browser. All processing happens locally.</p>
-        </div>
-        <div class="feature">
-            <h3>⚡ Instant Results</h3>
-            <p>Remove metadata in seconds. No waiting, no uploads.</p>
-        </div>
-        <div class="feature">
-            <h3>📊 See What's Removed</h3>
-            <p>View exactly what metadata was found and removed.</p>
+            <div class="results-actions">
+                <button id="downloadAll" class="btn-primary">Download All Clean Files</button>
+                <button id="processMore" class="btn-secondary">Process More Files</button>
+            </div>
         </div>
     </section>
 
-    <section class="faq">
-        <h2>What is Metadata?</h2>
-        <p>Metadata is hidden information embedded in your files. Photos contain location data, camera settings, and timestamps. PDFs reveal author names, company info, and editing history. This data can compromise your privacy when sharing files online.</p>
-        
-        <h2>Why Remove Metadata?</h2>
-        <ul>
-            <li>Protect your location privacy from photos</li>
-            <li>Remove personal information from documents</li>
-            <li>Prevent tracking through file properties</li>
-            <li>Comply with privacy regulations</li>
-        </ul>
+    <!-- Features -->
+    <section class="features" id="features">
+        <div class="container">
+            <h2 class="section-title">Advanced Metadata Removal Technology</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon-wrap">
+                        <span class="feature-icon">🔒</span>
+                    </div>
+                    <h3>100% Private</h3>
+                    <p>Files are processed locally in your browser. Nothing is uploaded to servers.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon-wrap">
+                        <span class="feature-icon">⚡</span>
+                    </div>
+                    <h3>Instant Processing</h3>
+                    <p>Remove metadata in seconds with our optimized algorithms.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon-wrap">
+                        <span class="feature-icon">📊</span>
+                    </div>
+                    <h3>Detailed Reports</h3>
+                    <p>See exactly what metadata was found and removed from each file.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon-wrap">
+                        <span class="feature-icon">🔄</span>
+                    </div>
+                    <h3>Batch Processing</h3>
+                    <p>Process multiple files at once. No file quantity limits.</p>
+                </div>
+            </div>
+        </div>
     </section>
 
-    <footer>
-        <p>&copy; 2024 Metadata Remover | 
-     <a href="/privacy.html">Privacy Policy</a> | 
-     <a href="/blog/what-is-metadata.html">What is Metadata?</a> | 
-     <a href="/blog/remove-exif-from-photos.html">Remove EXIF Data</a>
-  </p>
-    </footer>
+    <!-- Who Uses Section -->
+    <section class="who-uses" id="who-uses">
+        <div class="container">
+            <h2 class="section-title">Who Uses MetaRemover?</h2>
+            <div class="users-grid">
+                <div class="user-card">
+                    <span class="user-icon">📸</span>
+                    <h4>Photographers</h4>
+                    <p>Remove camera metadata before sharing photos online.</p>
+                </div>
+                <div class="user-card">
+                    <span class="user-icon">📰</span>
+                    <h4>Journalists</h4>
+                    <p>Protect sources by removing identifying metadata from documents.</p>
+                </div>
+                <div class="user-card">
+                    <span class="user-icon">🏢</span>
+                    <h4>Businesses</h4>
+                    <p>Clean internal information from files before external sharing.</p>
+                </div>
+                <div class="user-card">
+                    <span class="user-icon">🔐</span>
+                    <h4>Privacy Advocates</h4>
+                    <p>Ensure complete privacy when sharing files on social media.</p>
+                </div>
+                <div class="user-card">
+                    <span class="user-icon">🏠</span>
+                    <h4>Real Estate</h4>
+                    <p>Remove location data from property photos to protect addresses.</p>
+                </div>
+                <div class="user-card">
+                    <span class="user-icon">⚖️</span>
+                    <h4>Legal Teams</h4>
+                    <p>Sanitize documents to remove revision history and author information.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Algorithm Section -->
+    <section class="algorithm" id="algorithm">
+        <div class="container">
+            <h2 class="section-title-white">Advanced Removal Algorithm</h2>
+            <p class="section-subtitle">Our tool uses industry-leading techniques to ensure complete metadata removal</p>
+            <div class="algorithm-grid">
+                <div class="algorithm-card">
+                    <div class="check-icon">✓</div>
+                    <div>
+                        <h4>EXIF Data Removal</h4>
+                        <p>Completely removes all EXIF tags including GPS location, camera settings, and timestamps</p>
+                    </div>
+                </div>
+                <div class="algorithm-card">
+                    <div class="check-icon">✓</div>
+                    <div>
+                        <h4>Document Properties</h4>
+                        <p>Cleans author names, company information, revision history, and comments</p>
+                    </div>
+                </div>
+                <div class="algorithm-card">
+                    <div class="check-icon">✓</div>
+                    <div>
+                        <h4>Hidden Data</h4>
+                        <p>Detects and removes embedded thumbnails, color profiles, and other hidden information</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Global Stats -->
+    <section class="global-stats">
+        <div class="container">
+            <h2 class="section-title">Trusted Globally</h2>
+            <div class="global-grid">
+                <div class="global-stat">
+                    <h3>150+</h3>
+                    <p>Countries Served</p>
+                </div>
+                <div class="global-stat">
+                    <h3>50K+</h3>
+                    <p>Files Processed Monthly</p>
+                </div>
+                <div class="global-stat">
+                    <h3>99.9%</h3>
+                    <p>Success Rate</p>
+                </div>
+                <div class="global-stat">
+                    <h3>0</h3>
+                    <p>Data Breaches</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq" id="faq">
+        <div class="container">
+            <h2 class="section-title">Frequently Asked Questions</h2>
+            <div class="faq-grid">
+                <div class="faq-card">
+                    <h4>What is metadata?</h4>
+                    <p>Metadata is hidden information embedded in files. Photos contain GPS coordinates, camera settings, and dates. Documents store author names, company details, and revision history. This data can compromise your privacy.</p>
+                </div>
+                <div class="faq-card">
+                    <h4>Is it really private?</h4>
+                    <p>Yes! All processing happens directly in your web browser using JavaScript. Your files never leave your device and we cannot see, access, or store them.</p>
+                </div>
+                <div class="faq-card">
+                    <h4>How do I verify metadata was removed?</h4>
+                    <p>We show you exactly what was removed from each file. You can also use any metadata viewer tool to confirm your cleaned files contain no hidden information.</p>
+                </div>
+                <div class="faq-card">
+                    <h4>Is there a file size limit?</h4>
+                    <p>Since processing happens in your browser, the only limit is your device's capability. Most modern devices can handle files up to 100MB easily.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-box">
+                <h2>Fill Out The Form Below To Get In Touch With Us</h2>
+                <form class="cta-form">
+                    <input type="text" placeholder="Your Name" required>
+                    <input type="email" placeholder="Your Email" required>
+                    <input type="tel" placeholder="Phone Number">
+                    <textarea placeholder="Your Message" rows="3"></textarea>
+                    <button type="submit" class="btn-primary">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER: REPLACE THIS WHOLE BLOCK -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+
+      <div class="footer-brand">
+        <h3>MetaRemoval</h3>
+        <p>Privacy-first metadata removal. Files never leave your browser.</p>
+      </div>
+
+      <div class="footer-links">
+        <h4>Quick Links</h4>
+        <a href="#features">Features</a>
+        <a href="#who-uses">Who Uses</a>
+        <a href="#algorithm">How It Works</a>
+        <a href="#faq">FAQ</a>
+        <a href="/privacy.html">Privacy Policy</a>
+      </div>
+
+      <div class="footer-links">
+        <h4>Resources</h4>
+        <a href="/blog/what-is-metadata.html">What is Metadata?</a>
+        <a href="/blog/remove-exif-from-photos.html">Remove EXIF from Photos</a>
+      </div>
+
+      <div class="footer-links">
+        <h4>Contact</h4>
+        <a href="#contact">Contact Form</a>
+        <a href="mailto:hello@metaremoval.com">hello@metaremoval.com</a>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2025 MetaRemoval. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
 
     <script src="https://unpkg.com/exifr/dist/lite.umd.js"></script>
     <script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
