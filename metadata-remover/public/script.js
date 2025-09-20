@@ -103,6 +103,7 @@ async function processFile(file) {
     try {
         let cleanedFile;
         let metadataCount = 0;
+        let isProtected = false;
 
         if (file.type.includes('image')) {
             const result = await cleanImage(file);
@@ -112,6 +113,7 @@ async function processFile(file) {
             const result = await cleanPDF(file);
             cleanedFile = result.file;
             metadataCount = result.count;
+            isProtected = result.protected || false;
         } else {
             // For unsupported files, just pass through
             cleanedFile = file;
@@ -121,14 +123,21 @@ async function processFile(file) {
         processedFiles.push({
             original: file.name,
             cleaned: cleanedFile,
-            metadataCount
+            metadataCount,
+            isProtected
         });
 
         fileItem.classList.remove('processing');
-        fileItem.classList.add('success');
-        updateFileItem(fileItem, file.name, metadataCount);
         
-        return { metadataCount };
+        if (isProtected) {
+            fileItem.classList.add('warning');
+            updateFileItem(fileItem, file.name, -2); // Special code for protected
+        } else {
+            fileItem.classList.add('success');
+            updateFileItem(fileItem, file.name, metadataCount);
+        }
+        
+        return { metadataCount: isProtected ? 0 : metadataCount };
     } catch (error) {
         fileItem.classList.remove('processing');
         updateFileItem(fileItem, file.name, -1, error.message);
@@ -200,29 +209,49 @@ async function cleanImage(file) {
 async function cleanPDF(file) {
     try {
         const arrayBuffer = await file.arrayBuffer();
-        const pdfDoc = await PDFLib.PDFDocument.load(arrayBuffer);
+        let pdfDoc;
+        
+        try {
+            // Try to load the PDF normally
+            pdfDoc = await PDFLib.PDFDocument.load(arrayBuffer, {
+                ignoreEncryption: true // This helps with some protected PDFs
+            });
+        } catch (error) {
+            // If it's encrypted/protected, we can't process it
+            console.error('PDF is protected or encrypted:', error);
+            return { file: file, count: 0, protected: true };
+        }
         
         // Count existing metadata
         let metadataCount = 0;
-        if (pdfDoc.getTitle()) metadataCount++;
-        if (pdfDoc.getAuthor()) metadataCount++;
-        if (pdfDoc.getSubject()) metadataCount++;
-        if (pdfDoc.getKeywords()) metadataCount++;
-        if (pdfDoc.getProducer()) metadataCount++;
-        if (pdfDoc.getCreator()) metadataCount++;
+        try {
+            if (pdfDoc.getTitle()) metadataCount++;
+            if (pdfDoc.getAuthor()) metadataCount++;
+            if (pdfDoc.getSubject()) metadataCount++;
+            if (pdfDoc.getKeywords()) metadataCount++;
+            if (pdfDoc.getProducer()) metadataCount++;
+            if (pdfDoc.getCreator()) metadataCount++;
+        } catch (error) {
+            console.log('Could not read some metadata fields');
+        }
         
-        // Remove metadata
-        pdfDoc.setTitle('');
-        pdfDoc.setAuthor('');
-        pdfDoc.setSubject('');
-        pdfDoc.setKeywords([]);
-        pdfDoc.setProducer('');
-        pdfDoc.setCreator('');
-        
-        const pdfBytes = await pdfDoc.save();
-        const cleanFile = new File([pdfBytes], file.name, { type: 'application/pdf' });
-        
-        return { file: cleanFile, count: metadataCount };
+        // Remove metadata - only if we can modify the PDF
+        try {
+            pdfDoc.setTitle('');
+            pdfDoc.setAuthor('');
+            pdfDoc.setSubject('');
+            pdfDoc.setKeywords([]);
+            pdfDoc.setProducer('');
+            pdfDoc.setCreator('');
+            
+            const pdfBytes = await pdfDoc.save();
+            const cleanFile = new File([pdfBytes], file.name, { type: 'application/pdf' });
+            
+            return { file: cleanFile, count: metadataCount };
+        } catch (error) {
+            console.error('Cannot modify protected PDF:', error);
+            return { file: file, count: 0, protected: true };
+        }
     } catch (error) {
         console.error('PDF processing error:', error);
         return { file: file, count: 0 };
@@ -246,7 +275,13 @@ function updateFileItem(element, filename, count, error = null) {
     const statusEl = element.querySelector('.file-info p');
     const buttonEl = element.querySelector('button');
     
-    if (error) {
+    if (count === -2) {
+        // Protected PDF
+        statusEl.textContent = 'PDF is protected - cannot remove metadata';
+        statusEl.style.color = 'var(--accent, #F59E0B)';
+        buttonEl.textContent = 'Protected';
+        buttonEl.disabled = true;
+    } else if (error) {
         statusEl.textContent = `Error: ${error}`;
         statusEl.style.color = 'var(--danger, #DC2626)';
         buttonEl.textContent = 'Failed';

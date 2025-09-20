@@ -587,6 +587,11 @@ body {
     box-shadow: 0 2px 8px rgba(0,0,0,0.04);
 }
 
+.file-item.warning {
+    background-color: rgba(245, 158, 11, 0.1);
+    border-left: 4px solid var(--accent);
+}
+
 .file-info h4 {
     font-size: 1rem;
     margin-bottom: 0.25rem;
